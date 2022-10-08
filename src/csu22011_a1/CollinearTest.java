@@ -20,6 +20,7 @@ import java.util.Arrays;
 @RunWith(JUnit4.class)
 public class CollinearTest
 {
+    public static int[] emptyArray = new int[0];
     //~ Constructor ........................................................
     @Test
     public void testConstructor()
@@ -43,11 +44,30 @@ public class CollinearTest
         assertEquals("countCollinearFast with 3 empty arrays should return zero", expectedResult, Collinear.countCollinearFast(new int[0], new int[0], new int[0]));
     }
 
+    /**
+     * countCollinear Tests
+     */
     @Test
-    public void isCountCollinearCorrect()
+    public void testCountCollinear()
     {
         assertEquals(25, Collinear.countCollinear(new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}));
     }
 
+    @Test
+    public void testForLoopOne()
+    {
+        assertEquals(0, Collinear.countCollinear(emptyArray, new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}));
+    }
 
+    @Test
+    public void testForLoopTwo()
+    {
+        assertEquals(0, Collinear.countCollinear(new int[]{5, 10, 15, 20, 25, 30, 35}, emptyArray, new int[]{5, 10, 15, 20, 25, 30, 35}));
+    }
+
+    @Test
+    public void testForLoopThree()
+    {
+        assertEquals(0, Collinear.countCollinear(new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}, emptyArray));
+    }
 }
