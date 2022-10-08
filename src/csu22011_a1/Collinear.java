@@ -59,7 +59,7 @@ class Collinear
                 int x2Component = a2[k] * (Y3 - Y1);
                 for (int j = 0; j < a3.length; j++)
                 {
-                    int x3Component = a3[k] * (Y1 - Y2);
+                    int x3Component = a3[j] * (Y1 - Y2);
                     count = (x1Component + x2Component + x3Component == 0) ? count + 1 : count;
                 }
             }

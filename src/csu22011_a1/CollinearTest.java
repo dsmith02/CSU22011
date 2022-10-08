@@ -46,6 +46,8 @@ public class CollinearTest
     @Test
     public void isCountCollinearCorrect()
     {
-        assertEquals(1, Collinear.countCollinear(new int[]{2}, new int[]{4}, new int[]{6}));
+        assertEquals(25, Collinear.countCollinear(new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}));
     }
+
+
 }
