@@ -43,6 +43,9 @@ public class CollinearTest
         assertEquals("countCollinearFast with 3 empty arrays should return zero", expectedResult, Collinear.countCollinearFast(new int[0], new int[0], new int[0]));
     }
 
-    // TODO: write more tests here to cover 100% of the instructions and the branches of Collinear.java
-
+    @Test
+    public void isCountCollinearCorrect()
+    {
+        assertEquals(1, Collinear.countCollinear(new int[]{2}, new int[]{4}, new int[]{6}));
+    }
 }

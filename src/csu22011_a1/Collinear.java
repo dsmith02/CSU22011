@@ -15,6 +15,7 @@ class Collinear
     public static int Y2 = 2;
     public static int Y3 = 3;
 
+
     // ----------------------------------------------------------
 
     /**
