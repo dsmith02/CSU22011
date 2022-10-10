@@ -89,9 +89,22 @@ class Collinear
      */
     static int countCollinearFast(int[] a1, int[] a2, int[] a3)
     {
+        sort(a3);
 
-        //TODO: your code goes here.
-        return 0;
+        int count = 0;
+        for (int i = 0; i < a1.length; i++)
+        {
+            int x1Component = a1[i] * (Y2 - Y3);
+            for (int j = 0; j < a2.length; j++)
+            {
+                int x2Component = a2[j] * (Y3 - Y1);
+                if (binarySearch(a3, x1Component + x2Component))
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     // ----------------------------------------------------------

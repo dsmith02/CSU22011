@@ -70,4 +70,11 @@ public class CollinearTest
     {
         assertEquals(0, Collinear.countCollinear(new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}, emptyArray));
     }
+
+    // [5, 10, 15, 20, 25, 30, 35],[5, 10, 15, 20, 25, 30, 35],[5, 10, 15, 20, 25, 30, 35]
+    @Test
+    public void testCountCollinearFast()
+    {
+        assertEquals(25, Collinear.countCollinearFast(new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{5, 10, 15, 20, 25, 30, 35}, new int[]{25, 35, 30, 20, 5, 15, 10}));
+    }
 }
