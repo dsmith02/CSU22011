@@ -85,8 +85,7 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public boolean isEmpty()
     {
-      // TODO
-      return true;
+      return head == null;
     }
 
     /**
@@ -122,8 +121,18 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public T get(int pos) 
     {
-      //TODO
-      return null;
+      if (isEmpty() || pos < 0)
+      {
+          return null;
+      }
+
+      DLLNode node = head;
+      for (int i = 0; i < pos; i++)
+      {
+          node = node.next;
+      }
+
+      return node.data;
     }
 
     /**
