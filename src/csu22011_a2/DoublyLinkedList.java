@@ -105,7 +105,11 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public void insertBefore( int pos, T data ) 
     {
-      //TODO
+      if (pos <= 0 || isEmpty())
+      {
+          DLLNode node = head;
+          head = new DLLNode(data, null, node);
+      }
     }
 
     /**
@@ -307,7 +311,21 @@ class DoublyLinkedList<T extends Comparable<T>>
       return s.toString();
     }
 
+    public int getSize()
+    {
+        if (isEmpty())
+        {
+            return 0;
+        }
 
+        DLLNode currentNode = head;
+        int size = 0;
+        while ((currentNode = currentNode.next) != null)
+        {
+            size++;
+        }
+        return size;
+    }
 }
 
 
