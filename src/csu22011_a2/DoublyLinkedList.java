@@ -112,7 +112,13 @@ class DoublyLinkedList<T extends Comparable<T>>
     public void insertBefore(int pos, T data)
     {
         DLLNode nodeToInsert = new DLLNode(data, null, null);
-        if (pos <= 0 || isEmpty())
+        if (isEmpty())
+        {
+            head = nodeToInsert;
+            tail = nodeToInsert;
+            return;
+        }
+        else if (pos <= 0)
         {
             nodeToInsert.next = head;
             head.prev = nodeToInsert;
@@ -250,7 +256,7 @@ class DoublyLinkedList<T extends Comparable<T>>
      *             Worst-case asymptotic running time cost: TODO
      *             <p>
      *             Justification:
-     *              TODO
+     *                          TODO
      */
     public void push(T item)
     {
@@ -286,7 +292,7 @@ class DoublyLinkedList<T extends Comparable<T>>
      *             Worst-case asymptotic running time cost: TODO
      *             <p>
      *             Justification:
-     *              TODO
+     *                          TODO
      */
     public void enqueue(T item)
     {
