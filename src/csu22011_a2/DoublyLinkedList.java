@@ -270,7 +270,25 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public void makeUnique()
     {
-        //TODO
+        if (isEmpty() || head == tail)
+        {
+            return;
+        }
+
+        for (DLLNode i = head; i != null; i = i.next)
+        {
+            int pos = 0;
+            for (DLLNode j = head; j != null; j = j.next)
+            {
+                if (j.data == i.data && j != i)
+                {
+                    j = j.prev;
+                    deleteAt(pos);
+                    pos--;
+                }
+                pos++;
+            }
+        }
     }
 
     /**
@@ -316,7 +334,7 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public void push(T item)
     {
-        //TODO
+        insertBefore(0, item);
     }
 
     /**

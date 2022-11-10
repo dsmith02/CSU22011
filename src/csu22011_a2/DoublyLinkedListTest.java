@@ -112,5 +112,62 @@ public class DoublyLinkedListTest
         assertEquals("1,2", testDLL.toString());
     }
 
+    @Test
+    public void testMakeUnique()
+    {
+        // Test on empty
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.makeUnique();
+        assertEquals("", list.toString());
+
+        // Test on size one
+        list.insertBefore(0, 1);
+        list.makeUnique();
+        assertEquals("1", list.toString());
+
+        // Test on size three
+        list.insertBefore(1, 4);
+        list.insertBefore(2, 4);
+        list.insertBefore(3, 5);
+        list.insertBefore(4, 8);
+        list.makeUnique();
+        assertEquals("1,4,5,8", list.toString());
+
+        // Test on size four
+        list.insertBefore(0, 1);
+        list.insertBefore(1, 4);
+        list.insertBefore(2, 4);
+        list.insertBefore(3, 5);
+        list.insertBefore(4, 8);
+        list.insertBefore(5, 1);
+        list.makeUnique();
+        assertEquals("1,4,5,8", list.toString());
+    }
+
+    @Test
+    public void testPush()
+    {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+
+        // One element
+        list.push(0);
+        assertEquals("0", list.toString());
+
+        // Two elements
+        list.push(1);
+        assertEquals("1,0", list.toString());
+
+        // Test with all digits
+        list.push(2);
+        list.push(3);
+        list.push(4);
+        list.push(5);
+        list.push(6);
+        list.push(7);
+        list.push(8);
+        list.push(9);
+        assertEquals("9,8,7,6,5,4,3,2,1,0", list.toString());
+
+    }
 }
 
