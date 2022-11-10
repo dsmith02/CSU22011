@@ -88,10 +88,14 @@ class DoublyLinkedList<T extends Comparable<T>>
      *
      * @return true if list is empty, and false otherwise
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(1)
      * <p>
      * Justification:
-     *  TODO
+     *  As there is no case where either the head or tail is null, we can safely
+     *  check only one of these fields for null.
+     *
+     *  If one is null, then the list is empty and as this is a simple operation,
+     *  it will run in the worst-case at theta(1).
      */
     public boolean isEmpty()
     {
@@ -109,10 +113,21 @@ class DoublyLinkedList<T extends Comparable<T>>
      * @param data : The new data of class T that needs to be added to the list
      * @return none
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(N)
      * <p>
      * Justification:
-     *  TODO
+     *  We create a node to insert -> theta(1).
+     *  We then check if it is empty and make some simple assignments if so -> theta(1).
+     *  We then check if the position is less than 0, in which case we make more assignments
+     *  and thus worst-case is still theta(1).
+     *
+     *  If the node is further up the list, we then have to find the node which uses
+     *  the nodeAt function, which runs in theta(N) time in the worst-case (see below).
+     *
+     *  The last if-else branches then execute, which only contain simple assignemnts
+     *  and thus run in theta(1) time.
+     *
+     *  Therefore, the worst-case is theta(N) as it calls the nodeAt() function.
      */
     public void insertBefore(int pos, T data)
     {
@@ -153,10 +168,17 @@ class DoublyLinkedList<T extends Comparable<T>>
      * @param pos : the position
      * @return the data at pos, if pos is within the bounds of the list, and null otherwise.
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(N)
      * <p>
      * Justification:
-     *  TODO
+     *  We first check if the list isEmpty, which runs in constant time and ensure that the position
+     *  is valid -> theta(1).
+     *
+     *  We then assign the node = head -> theta(1)
+     *  We then iterate over the loop, making some simple assignments which run in constant time.
+     *  If the position is equal to the tail or worse, it will iterate over all nodes -> theta(N).
+     *
+     *  Therefore the worst-case running time is theta(N)
      */
     public T get(int pos)
     {
@@ -182,10 +204,12 @@ class DoublyLinkedList<T extends Comparable<T>>
      * @param pos : the position to delete in the list.
      * @return true : on successful deletion, false : list has not been modified.
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(N)
      * <p>
      * Justification:
-     *  TODO
+     *  Firstly we get the node reference, which in worst-case (see below) is theta(N).
+     *  All other branches, comparisons and assignments run in constant time so it can
+     *  be deduced that the worst-case running time of deleteAt is theta(N)
      */
     public boolean deleteAt(int pos)
     {
@@ -228,10 +252,18 @@ class DoublyLinkedList<T extends Comparable<T>>
      * If the list contains "A", "B", "C", "D" before the method is called
      * Then it should contain "D", "C", "B", "A" after it returns.
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(N)
      * <p>
      * Justification:
-     *  TODO
+     *  Firstly, if the list is empty or is a one element list, we do nothing.
+     *  These all run in constant time -> theta(1).
+     *
+     *  We then make some simple assignments and enter a while loop which changes the references
+     *  of the nodes so that they are reversed. All nodes need to be visited so the worst case time
+     *  is theta(N).
+     *
+     *  The final assignments have no gravity on the worst-case running time as they run in
+     *  theta(1) time.
      */
     public void reverse()
     {
@@ -263,10 +295,20 @@ class DoublyLinkedList<T extends Comparable<T>>
      * Then it should contain "A", "B", "C", "D" after it returns.
      * The relative order of elements in the resulting list should be the same as the starting list.
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(N^2)
      * <p>
      * Justification:
-     *  TODO
+     *  Again, if the list is empty or contains only one element, we do nothing -> theta(1).
+     *
+     *  We then enter a for loop which makes some simple assignments and creates a pos variable -> theta(1)
+     *  We then enter another for loop, which does the same as the previous for-loop -> theta(1)
+     *
+     *  However, this algorithm takes each element and in turn compares it to every other element
+     *  in the list i.e. a nested for-loop. We use the deleteAt function, which runs in theta(N)
+     *  time.
+     *
+     *  All in all, this algorithm runs in theta(N) * (theta(N) + theta(N)), which simplifies
+     *  to theta(N^2) in the worst-case as all N elements ar visited N times.
      */
     public void makeUnique()
     {
@@ -297,13 +339,38 @@ class DoublyLinkedList<T extends Comparable<T>>
      * If pos is greater than the size of the DLL, it returns the tail.
      * @param pos
      * @return
+     *
+     * Worst-case: theta(N)
+     *
+     * Justification:
+     *  If the list is empty, we do a simple comparison with head and null and return null -> theta(1)
+     *
+     *  We then check if it is the first element by checking if pos = 0 -> theta(1)
+     *
+     *  If pos is invalid i.e. < 0 -> theta(1)
+     *
+     *  We make two simple assignments of count = 0 and current = head, which are constant.
+     *  We then enter a while loop, which increments the current node, which is theta(1).
+     *  It also makes a comparison to null in constant time.
+     *  The counter is then incremented and checked if it is less than pos -> theta(1).
+     *
+     *  All in all, if the node at the position specified is the tail or out of range,
+     *  then nodeAt will iterate over all N nodes.
+     *
+     *  Therefore the worst-case is theta(N)
      */
     public DLLNode nodeAt(int pos)
     {
+        if (head == null)
+        {
+            return null;
+        }
+
         if (pos == 0)
         {
             return head;
         }
+
         else if (pos < 0)
         {
             return null;
@@ -327,10 +394,11 @@ class DoublyLinkedList<T extends Comparable<T>>
      *
      * @param item : the item to push on the stack
      *             <p>
-     *             Worst-case asymptotic running time cost: TODO
+     *             Worst-case asymptotic running time cost: theta(1)
      *             <p>
      *             Justification:
-     *                          TODO
+     *                          Simply uses the insertBefore method but with the parameter 0 fixed,
+     *             therefore it is only changing the head which runs in theta(1) time.
      */
     public void push(T item)
     {
@@ -342,10 +410,14 @@ class DoublyLinkedList<T extends Comparable<T>>
      *
      * @return the last item inserted with a push; or null when the list is empty.
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(1)
      * <p>
      * Justification:
-     *  TODO
+     *  This method checks if it is empty, which runs in constant time.
+     *
+     *  It then saves the data to be returned from the head, which is the top of the stack.
+     *  Then deletes the old head, which according to my analysis of the deleteAt() function
+     *  runs in theta(1) as the parameter is fixed to 0.
      */
     public T pop()
     {
@@ -369,14 +441,14 @@ class DoublyLinkedList<T extends Comparable<T>>
      *
      * @param item : the item to be enqueued to the stack
      *             <p>
-     *             Worst-case asymptotic running time cost: TODO
+     *             Worst-case asymptotic running time cost: theta(1)
      *             <p>
      *             Justification:
-     *                          TODO
+     *                          Merely calls the push() function which runs in constant time.
      */
     public void enqueue(T item)
     {
-        //TODO
+        push(item);
     }
 
     /**
@@ -384,15 +456,40 @@ class DoublyLinkedList<T extends Comparable<T>>
      *
      * @return the earliest item inserted with an equeue; or null when the list is empty.
      * <p>
-     * Worst-case asymptotic running time cost: TODO
+     * Worst-case asymptotic running time cost: theta(1)
      * <p>
      * Justification:
-     *  TODO
+     *  It checks if the list is empty, which runs in constant time.
+     *
+     *  It checks if the list is empty, with the if statement and its assignments
+     *  running in constant time -> theta(1).
+     *
+     *  If not, it meerely changes the tail to the element previous to the current tail.
+     *  And returns the old tail's data, with the assignemnts running in constant time.
+     *
+     *  Therefore, theta(1).
      */
     public T dequeue()
     {
-        //TODO
-        return null;
+        if (isEmpty())
+        {
+            return null;
+        }
+
+        if (head == tail)
+        {
+            T data = head.data;
+            head = null;
+            tail = null;
+            return data;
+        }
+
+        T data = tail.data;
+        DLLNode oldTail = tail;
+        tail = tail.prev;
+        tail.next = null;
+        oldTail.prev = null;
+        return data;
     }
 
 
@@ -447,22 +544,6 @@ class DoublyLinkedList<T extends Comparable<T>>
         }
 
         return s.toString();
-    }
-
-    public int getSize()
-    {
-        if (isEmpty())
-        {
-            return 0;
-        }
-
-        DLLNode currentNode = head;
-        int size = 0;
-        while ((currentNode = currentNode.next) != null)
-        {
-            size++;
-        }
-        return size;
     }
 }
 

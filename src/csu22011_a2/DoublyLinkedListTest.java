@@ -98,6 +98,7 @@ public class DoublyLinkedListTest
         // Test on empty
         DoublyLinkedList<Integer> testDLL = new DoublyLinkedList<>();
         assertEquals(false, testDLL.deleteAt(0));
+        assertEquals(false, testDLL.deleteAt(1));
 
         // Test on DLL of size one
         testDLL.insertBefore(0, 3);
@@ -187,6 +188,83 @@ public class DoublyLinkedListTest
         list.push(2);
         assertEquals(Integer.valueOf(2), list.pop());
 
+    }
+
+    @Test
+    public void testEnqueue()
+    {
+        // Test on one elem
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.enqueue(0);
+        assertEquals("0", list.toString());
+
+        // Test on two elems
+        list.enqueue(1);
+        assertEquals("1,0", list.toString());
+
+        // Test with all digits
+        list.enqueue(2);
+        list.enqueue(3);
+        list.enqueue(4);
+        list.enqueue(5);
+        list.enqueue(6);
+        list.enqueue(7);
+        list.enqueue(8);
+        list.enqueue(9);
+        assertEquals("9,8,7,6,5,4,3,2,1,0", list.toString());
+    }
+
+    @Test
+    public void testDequeue()
+    {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+
+        // Test empty list
+        assertEquals(null, list.dequeue());
+
+        // Test one elem
+        list.enqueue(0);
+        assertEquals(Integer.valueOf(0), list.dequeue());
+        assertEquals("", list.toString());
+
+        // Test with all digits
+        list.enqueue(2);
+        list.enqueue(3);
+        list.enqueue(4);
+        list.enqueue(5);
+        list.enqueue(6);
+        list.enqueue(7);
+        list.enqueue(8);
+        list.enqueue(9);
+        assertEquals(Integer.valueOf(2), list.dequeue());
+        assertEquals("9,8,7,6,5,4,3", list.toString());
+    }
+
+    @Test
+    public void testGet()
+    {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+
+        // Test empty
+        assertEquals(null, list.get(0));
+
+        // Test negative
+        assertEquals(null, list.get(-1));
+
+        // Test one element
+        list.insertBefore(0, 1);
+        assertEquals(Integer.valueOf(1), list.get(0));
+
+        // Test 3 elements
+        list.insertBefore(1, 2);
+        list.insertBefore(2, 3);
+        assertEquals(Integer.valueOf(2), list.get(1));
+
+        // Test tail
+        assertEquals(Integer.valueOf(3), list.get(2));
+
+        // Test if it goes beyond the list and returns null
+        assertEquals(null, list.get(3));
     }
 }
 
