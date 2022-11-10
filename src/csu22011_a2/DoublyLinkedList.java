@@ -62,6 +62,11 @@ class DoublyLinkedList<T extends Comparable<T>>
             prev = prevNode;
             next = nextNode;
         }
+
+        public String toString()
+        {
+            return data + "";
+        }
     }
 
     // Fields head and tail point to the first and last nodes of the list.
@@ -129,15 +134,16 @@ class DoublyLinkedList<T extends Comparable<T>>
         DLLNode nodeToBeMoved = nodeAt(pos);
         if (nodeToBeMoved == null)
         {
-            nodeToInsert.next = tail;
-            tail.prev = nodeToInsert;
+            nodeToInsert.prev = tail;
+            tail.next = nodeToInsert;
             tail = nodeToInsert;
         }
         else
         {
             nodeToInsert.prev = nodeToBeMoved.prev;
-            nodeToInsert.next = nodeToBeMoved;
+            nodeToBeMoved.prev.next = nodeToInsert;
             nodeToBeMoved.prev = nodeToInsert;
+            nodeToInsert.next = nodeToBeMoved;
         }
     }
 
@@ -183,17 +189,38 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public boolean deleteAt(int pos)
     {
-        DLLNode node = nodeAt(pos);
-        if (pos < 0 || node == null)
+        DLLNode nodeToBeDeleted = nodeAt(pos);
+        if (nodeToBeDeleted == null)
         {
             return false;
         }
 
-        node.prev.next = node.next;
-        node.next.prev = node.prev;
-        node.next = null;
-        node.prev = null;
-        return true;
+        if (nodeToBeDeleted == head && nodeToBeDeleted == tail)
+        {
+            head = null;
+            tail = null;
+            return true;
+        }
+        else if (nodeToBeDeleted == head)
+        {
+            head.next = head;
+            head.prev = null;
+            return true;
+        }
+        else if (nodeToBeDeleted == tail)
+        {
+            tail = tail.prev;
+            tail.next = null;
+            return true;
+        }
+        else
+        {
+            nodeToBeDeleted.prev.next = nodeToBeDeleted.next;
+            nodeToBeDeleted.next.prev = nodeToBeDeleted.prev;
+            nodeToBeDeleted.prev = null;
+            nodeToBeDeleted.next = null;
+            return true;
+        }
     }
 
     /**
@@ -208,7 +235,25 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public void reverse()
     {
-        //TODO
+        if (isEmpty() || head == tail)
+        {
+            return;
+        }
+
+        DLLNode prev = null;
+        DLLNode current = head;
+
+        while (current != null)
+        {
+            prev = current.prev;
+            current.prev = current.next;
+            current.next = prev;
+            current = current.prev;
+        }
+
+        DLLNode tmp = head;
+        head = tail;
+        tail = tmp;
     }
 
     /**
@@ -228,16 +273,27 @@ class DoublyLinkedList<T extends Comparable<T>>
         //TODO
     }
 
+    /**
+     * Returns a reference to the node at the pos position.
+     * If pos < 0, it returns the head.
+     * If pos is greater than the size of the DLL, it returns the tail.
+     * @param pos
+     * @return
+     */
     public DLLNode nodeAt(int pos)
     {
-        if (pos <= 0)
+        if (pos == 0)
         {
             return head;
+        }
+        else if (pos < 0)
+        {
+            return null;
         }
 
         int count = 0;
         DLLNode current = head;
-        while ((current = current.next) != null && ++count < pos) ;
+        while ((current = current.next) != null && ++count < pos);
 
         return current;
     }
