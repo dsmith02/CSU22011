@@ -10,6 +10,8 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Optional;
+
 //-------------------------------------------------------------------------
 
 /**
@@ -167,6 +169,23 @@ public class DoublyLinkedListTest
         list.push(8);
         list.push(9);
         assertEquals("9,8,7,6,5,4,3,2,1,0", list.toString());
+    }
+
+    @Test
+    public void testPop()
+    {
+        // Test on empty list
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        assertEquals(null, list.pop());
+
+        // One element
+        list.push(0);
+        assertEquals(Integer.valueOf(0), list.pop());
+
+        // Two elements
+        list.push(1);
+        list.push(2);
+        assertEquals(Integer.valueOf(2), list.pop());
 
     }
 }

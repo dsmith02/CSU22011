@@ -203,7 +203,7 @@ class DoublyLinkedList<T extends Comparable<T>>
         }
         else if (nodeToBeDeleted == head)
         {
-            head.next = head;
+            head = head.next;
             head.prev = null;
             return true;
         }
@@ -349,8 +349,14 @@ class DoublyLinkedList<T extends Comparable<T>>
      */
     public T pop()
     {
-        //TODO
-        return null;
+        if (isEmpty())
+        {
+            return null;
+        }
+
+        T data = head.data;
+        deleteAt(0);
+        return data;
     }
 
     /*----------------------- QUEUE API
